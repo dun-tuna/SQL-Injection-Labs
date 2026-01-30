@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  level1_web:
+    build: ./Level1
+    ports:
+      - "8001:80"
+    volumes:
+      - ./Level1/src:/var/www/html
+    depends_on:
+      - level1_db
+
+  level1_db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog_lab
+    volumes:
+      - ./Level1/db/db.sql:/docker-entrypoint-initdb.d/init.sql
+
+  level2_web:
+    build: ./Level2
+    ports:
+      - "8002:80"
+    volumes:
+      - ./Level2/src:/var/www/html
+    depends_on:
+      - level2_db
+
+  level2_db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog_lab
+    volumes:
+      - ./Level2/db/db.sql:/docker-entrypoint-initdb.d/init.sql
+
+  level3_web:
+    build: ./Level3
+    ports:
+      - "8003:80"
+    volumes:
+      - ./Level3/src:/var/www/html
+    depends_on:
+      - level3_db
+
+  level3_db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog_lab
+    volumes:
+      - ./Level3/db/db.sql:/docker-entrypoint-initdb.d/init.sql
